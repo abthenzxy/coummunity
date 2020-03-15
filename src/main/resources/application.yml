@@ -1,0 +1,27 @@
+
+
+
+mybatis:
+  type-aliases-package: com.ab.springvote.pojo
+  configuration:
+    auto-mapping-behavior: full
+    use-generated-keys: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///community?serverTimezone=UTC&useUnicode=true&charactorEncoding=UTF-8
+    #username: abthen
+    #password: abthen@180
+    username: root
+    password: carrot@180
+
+thymeleaf:
+  encoding: UTF-8
+  cache: false
+
+server:
+  servlet:
+    context-path: /cmu
+    port: 8080
