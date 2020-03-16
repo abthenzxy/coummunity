@@ -25,3 +25,8 @@ server:
   servlet:
     context-path: /cmu
     port: 8080
+github:
+  client:
+    id: 6587a2861b99885fc302
+    secret: e3099abf62ee158a414bf760d1bddd8c0055bdee
+    redirect_url: http://localhost:8080/cmu/callback

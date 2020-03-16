@@ -4,6 +4,7 @@ import com.community.dto.AccessTokenDTO;
 import com.community.provider.GitHubProvider;
 import com.community.provider.GitHubUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
+
+    @Value("${github.client.id}")
+    private String clientid;
+    @Value("${github.client.secret}")
+    private String clientsecret;
+    @Value("${github.client.redirect_url}")
+    private String redirecturl;
 
     @Autowired
     private GitHubProvider provider;
@@ -25,6 +33,7 @@ public class LoginController {
         return "test";
     }
 
+    /*验证git登录*/
     @GetMapping("/callback")
     public String callBack(@RequestParam(name = "code") String code,
                             @RequestParam(name = "state") String state,
@@ -34,14 +43,15 @@ public class LoginController {
         System.out.println(code);
         System.out.println(state);
         AccessTokenDTO accessTokenDTO =new AccessTokenDTO();
-        accessTokenDTO.setClient_id("6587a2861b99885fc302");
-        accessTokenDTO.setClient_secret("e3099abf62ee158a414bf760d1bddd8c0055bdee");
+        accessTokenDTO.setClient_id(clientid);
+        accessTokenDTO.setClient_secret(clientsecret);
         accessTokenDTO.setCode(code);
         accessTokenDTO.setState(state);
-        accessTokenDTO.setRedirect_uri("http://localhost:8080/cmu/callback");
+        accessTokenDTO.setRedirect_uri(redirecturl);
         String string=provider.getAccessToken(accessTokenDTO);
         GitHubUser user=provider.getUser(string);
         model.addAttribute("githubuser",user);
+        System.out.println(user.getName());
         return "index";
     }
 }
