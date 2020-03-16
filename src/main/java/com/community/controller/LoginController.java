@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
@@ -37,7 +39,7 @@ public class LoginController {
     @GetMapping("/callback")
     public String callBack(@RequestParam(name = "code") String code,
                             @RequestParam(name = "state") String state,
-                            Model model
+                            HttpSession session
     ){
         System.out.println("进入controller");
         System.out.println(code);
@@ -50,8 +52,8 @@ public class LoginController {
         accessTokenDTO.setRedirect_uri(redirecturl);
         String string=provider.getAccessToken(accessTokenDTO);
         GitHubUser user=provider.getUser(string);
-        model.addAttribute("githubuser",user);
-        System.out.println(user.getName());
-        return "index";
+        session.setAttribute("user",user);
+
+        return "redirect:/";
     }
 }
