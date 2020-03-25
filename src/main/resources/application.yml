@@ -1,8 +1,5 @@
-
-
-
 mybatis:
-  type-aliases-package: com.ab.springvote.pojo
+  type-aliases-package: com.community.pojo
   configuration:
     auto-mapping-behavior: full
     use-generated-keys: true
